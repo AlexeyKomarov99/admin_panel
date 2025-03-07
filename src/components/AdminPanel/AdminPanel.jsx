@@ -5,7 +5,10 @@ import React, {useState, useEffect, useContext} from 'react';
 //===== Компоненты =====//
 
 //===== Сервисы =====//
-import { GetUserData } from '../../services/UserService';
+import { 
+  GetUserData,
+  GetSocials,
+} from '../../services/UserService';
 
 //===== Контексты =====//
 import { AuthContext } from '../../context/AuthContext';
@@ -13,15 +16,24 @@ import { AuthContext } from '../../context/AuthContext';
 const AdminPanel = () => {
   
   const [userData, setUserData] = useState(null);
+  const [socialsList, setSocialsList] = useState(null);
+
   const {tokens} = useContext(AuthContext);
 
   const loadUserData = async () => {
+    if (!tokens || !tokens.access) {
+      console.log('Токены не установлены');
+      return;
+    }
+    
     try {
-      const response = await GetUserData(tokens);
-      if(response) {
-        setUserData(response);
-        console.log('Данные пользователя');
-        console.log(userData);
+      const user = await GetUserData(tokens);
+      const socials = await GetSocials(tokens);
+      if(
+        Object.keys(user).length > 0
+      ) {
+        setUserData(user);
+        setSocialsList(socials);
       }
     } catch (error) {
       console.log('Ошибка загрузки данных о пользователе', error);
@@ -35,6 +47,20 @@ const AdminPanel = () => {
   return (
     <div className='AdminPanel'>
       <span>
+        {userData ? userData.last_name : 'null'}
+        <br />
+        {userData ? userData.last_login : 'null'}
+      </span>
+      <span>
+        {socialsList && socialsList.length > 0 ? (
+          socialsList.map((social) => (
+            <div key={social.id}>
+              {social.name}
+            </div>
+          ))
+        ) : (
+          <div>Список пуст!</div>
+        )}
       </span>
     </div>
   )

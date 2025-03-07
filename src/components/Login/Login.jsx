@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+//===== Контексты =====//
+import {AuthContext} from '../../context/AuthContext';
+
 //===== Сервис =====//
-import {login} from '../../services/AuthService';
 import {UserData} from '../../services/UserService';
 
 //===== Ресурсы =====//
 import './Login.scss';
 
+//===== Контексты =====//
+
+
 const Login = () => {
-  
+
   const navigate = useNavigate();
+  const { handleLogin } = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState({
     telegram_id: '',
@@ -29,9 +35,9 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await login(credentials);
-      if(response) {
-        console.log('Ответ от сервера:\n', response);
+      const loginSuccess = await handleLogin(credentials);
+      if(loginSuccess) {
+        console.log('Ответ от сервера:\n', loginSuccess);
         navigate('/admin-panel');
       }
     } catch (error) {
