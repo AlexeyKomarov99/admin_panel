@@ -1,10 +1,17 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+
+//===== Сервис =====//
+import {login} from '../../services/AuthService';
+import {UserData} from '../../services/UserService';
 
 //===== Ресурсы =====//
 import './Login.scss';
 
 const Login = () => {
   
+  const navigate = useNavigate();
+
   const [credentials, setCredentials] = useState({
     telegram_id: '',
     password: '',
@@ -18,9 +25,18 @@ const Login = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
+    try {
+      const response = await login(credentials);
+      if(response) {
+        console.log('Ответ от сервера:\n', response);
+        navigate('/admin-panel');
+      }
+    } catch (error) {
+      console.log('Ошибка процедуры входа', error);
+    }
 
   }
 

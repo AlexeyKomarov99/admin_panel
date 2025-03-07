@@ -14,7 +14,7 @@ const Authorization = () => {
   const toggleActiveSection = (section) => setActiveSection(section);
   
   return (
-    <form className='Authorization'>
+    <div className='Authorization'>
       <div className="Authorization__content">
         
         <div className="Authorization__header-wrapper">
@@ -43,7 +43,7 @@ const Authorization = () => {
 
       </div>
 
-    </form>
+    </div>
   )
 }
 
