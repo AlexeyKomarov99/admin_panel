@@ -39,7 +39,7 @@ const Login = () => {
       if(loginSuccess) {
         console.log('Ответ от сервера:', loginSuccess);
 
-        // Сохранение данных в localStorage для автоматческого входа в систему
+        // Сохранение данных в localStorage login и password пользователя
         localStorage.setItem('login', credentials.telegram_id);
         localStorage.setItem('password', credentials.password);
 
@@ -48,7 +48,6 @@ const Login = () => {
     } catch (error) {
       console.log('Ошибка процедуры входа', error);
     }
-
   }
 
   return (
