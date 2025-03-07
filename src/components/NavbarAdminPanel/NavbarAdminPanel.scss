@@ -1,0 +1,52 @@
+@import '../../App.css';
+.NavbarAdminPanel {
+    background-color: var(--color-dark);
+    .NavbarAdminPanel__wrapper {
+        width: 100%;
+        padding: 0 16px;
+        .NavbarAdminPanel__container {
+            height: 100%;
+            padding: 8px 0;
+            .NavbarAdminPanel__group {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 3rem;
+                
+                .NavbarAdminPanel__username {
+                    font-size: 1.5rem;
+                    color: var(--color-super-light-gray);
+                    cursor: pointer;
+                }
+                .NavbarAdminPanel__group-items {
+                    display: flex;
+                    height: 100%;
+                    .NavbarAdminPanel__item {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+                        font-size: 1.25rem;
+                        padding: 0 10px;
+                        border-radius: var(--border-radius);
+                        color: var(--color-super-light-gray);
+                        cursor: pointer;
+
+                        &:nth-child(n):not(:last-child) {
+                            margin-right: 1rem;
+                        }
+                    }
+                    .active {
+                        color: var(--color-white);
+                        background-color: var(--color-accent);
+                    }
+                }
+                .NavbarAdminPanel__logout {
+                    font-size: 1.25rem;
+                    color: var(--color-super-light-gray);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

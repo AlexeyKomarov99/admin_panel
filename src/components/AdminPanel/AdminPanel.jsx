@@ -1,14 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 
 //===== Ресурсы =====//
+import './AdminPanel.scss';
 
 //===== Компоненты =====//
+import NavbarAdminPanel from '../NavbarAdminPanel/NavbarAdminPanel';
+import SocialsData from '../SocialsData/SocialsData';
+import QuestsData from '../QuestsData/QuestsData';
 
 //===== Сервисы =====//
-import { 
-  GetUserData,
-  GetSocials,
-} from '../../services/UserService';
+import { GetUserData } from '../../services/UserService';
+import { Socials } from '../../services/SocialsService';
 
 //===== Контексты =====//
 import { AuthContext } from '../../context/AuthContext';
@@ -16,9 +18,11 @@ import { AuthContext } from '../../context/AuthContext';
 const AdminPanel = () => {
   
   const [userData, setUserData] = useState(null);
-  const [socialsList, setSocialsList] = useState(null);
-
+  const [questsList, setQuestsList] = useState(null);
+  const [activeSection, setActiveSection] = useState('socials');
   const {tokens} = useContext(AuthContext);
+
+  const toggleSection = (sectionName) => setActiveSection(sectionName);
 
   const loadUserData = async () => {
     if (!tokens || !tokens.access) {
@@ -28,12 +32,12 @@ const AdminPanel = () => {
     
     try {
       const user = await GetUserData(tokens);
-      const socials = await GetSocials(tokens);
+      const quests = await Socials(tokens);
       if(
         Object.keys(user).length > 0
       ) {
         setUserData(user);
-        setSocialsList(socials);
+        setQuestsList(quests);
       }
     } catch (error) {
       console.log('Ошибка загрузки данных о пользователе', error);
@@ -46,22 +50,15 @@ const AdminPanel = () => {
   
   return (
     <div className='AdminPanel'>
-      <span>
-        {userData ? userData.last_name : 'null'}
-        <br />
-        {userData ? userData.last_login : 'null'}
-      </span>
-      <span>
-        {socialsList && socialsList.length > 0 ? (
-          socialsList.map((social) => (
-            <div key={social.id}>
-              {social.name}
-            </div>
-          ))
-        ) : (
-          <div>Список пуст!</div>
-        )}
-      </span>
+      <div className="AdminPanel__container">
+        <NavbarAdminPanel
+          userData={userData}
+          activeSection={activeSection}
+          toggleSection={toggleSection}
+        />
+        {activeSection === 'quests' && <QuestsData questsList={questsList} />}
+        {activeSection === 'socials' && <SocialsData />}
+      </div>
     </div>
   )
 }
