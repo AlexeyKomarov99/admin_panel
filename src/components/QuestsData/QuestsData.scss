@@ -1,9 +1,88 @@
 @import '../../App.css';
 .QuestsData {
+    margin-top: 3rem;
     .QuestsData__wrapper {
+        width: 100%;
+        padding: 0 16px;
         .QuestsData__container {
+            padding: 16px 0;
             .QuestsData__content {
                 
+                .QuestsData__table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    outline: var(--outline);
+                    border-radius: var(--border-radius);
+
+                    @for $i from 1 through 13 {
+                        th:nth-child(#{$i}), td:nth-child(#{$i}) {
+                          @if $i == 3 or $i == 4 {
+                            width: 15%;
+                          } @else {
+                            width: auto;
+                          }
+                        }
+                    }
+
+                    .QuestsData__thead {
+                        background-color: rgba(#121212, 0.5);
+                        .QuestsData__tr {
+                            .QuestsData__th {
+                                vertical-align:center;
+                                text-align: center;
+                                color: var(--color-super-light-gray);
+                                font-size: 1.25rem;
+                                padding: 7px 12px;
+                            }
+                        }
+                    }
+                    .QuestsData__tbody {
+                        .QuestsData__tr {
+                            // Для нечетных строк
+                            &:nth-child(odd) {
+                                background-color: #969696;
+                            }
+    
+                            // Для четных строк
+                            &:nth-child(even) {
+                                background-color: #c2c0c0;
+                            }
+                            .QuestsData__td {
+                                padding: 7px 0;
+                                text-align: center; /* Центрируем содержимое по горизонтали */
+                                vertical-align: middle; /* Центрируем содержимое по вертикали */
+                            }
+                            .QuestsData__icon-group {
+                                .icon {
+                                    display: inline-flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    width: 25px;
+                                    height: 25px;
+                                    border-radius: var(--border-radius);
+                                    border: 1px solid var(--color-dark-gray);
+                                    transition: var(--transition);
+                                    padding: 1px;
+                                    cursor: pointer;
+                                    &:nth-child(n):not(:last-child) {
+                                        margin-right: 0.5rem;
+                                    }
+                                    
+
+                                    &:hover {
+                                        background-color: var(--color-dark);
+                                    }
+                                }
+                                .check {
+                                    color: green;
+                                }
+                                .cross {
+                                    color: red;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

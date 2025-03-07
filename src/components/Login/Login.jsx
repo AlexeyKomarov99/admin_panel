@@ -37,7 +37,12 @@ const Login = () => {
     try {
       const loginSuccess = await handleLogin(credentials);
       if(loginSuccess) {
-        console.log('Ответ от сервера:\n', loginSuccess);
+        console.log('Ответ от сервера:', loginSuccess);
+
+        // Сохранение данных в localStorage для автоматческого входа в систему
+        localStorage.setItem('login', credentials.telegram_id);
+        localStorage.setItem('password', credentials.password);
+
         navigate('/admin-panel');
       }
     } catch (error) {

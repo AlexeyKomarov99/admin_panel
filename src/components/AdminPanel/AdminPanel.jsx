@@ -19,7 +19,7 @@ const AdminPanel = () => {
   
   const [userData, setUserData] = useState(null);
   const [questsList, setQuestsList] = useState(null);
-  const [activeSection, setActiveSection] = useState('socials');
+  const [activeSection, setActiveSection] = useState('quests');
   const {tokens} = useContext(AuthContext);
 
   const toggleSection = (sectionName) => setActiveSection(sectionName);
@@ -33,6 +33,7 @@ const AdminPanel = () => {
     try {
       const user = await GetUserData(tokens);
       const quests = await Socials(tokens);
+      console.log('Список с заданиями', quests);
       if(
         Object.keys(user).length > 0
       ) {
